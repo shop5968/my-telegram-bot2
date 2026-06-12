@@ -3,28 +3,42 @@ name: Run Bot 24/7
 on:
   push:
   schedule:
-    # Запуск скрипта каждые 3 часа
-    - cron: '0 */3 * * *'
+    - cron: '0 */3 * * *' # Запуск каждые 3 часа
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Обязательно: дает право на запись (push) в репозиторий
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-    - name: Run Telegram Bot
-      # Таймаут в 165 минут (чуть меньше 3 часов), чтобы процессы не накладывались друг на друга
-      timeout-minutes: 165
-      run: python bot.py
+      - name: Run Telegram Bot
+        # Бот будет работать, пока не сработает таймаут (через ~2.5 часа)
+        timeout-minutes: 150 
+        run: python bot.py
+
+      - name: Сохранение изменений в GitHub
+        if: always() # Выполнится даже если бот завершился с ошибкой или по таймауту
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          # Добавляем файлы базы данных в индекс
+          git add db_shop.json db_tickets.json
+          
+          # Делаем коммит и пуш, если были изменения
+          git commit -m "Авто-сохранение базы данных [skip ci]" || echo "Нет изменений для коммита"
+          git push
