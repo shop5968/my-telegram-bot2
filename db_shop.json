@@ -4,18 +4,28 @@
         5632144886
     ],
     "products": {
-        "10001": {
-            "name": "🎁 Товар 1",
-            "price": "490 руб.",
-            "desc": "Описание первого товара."
+        "41784": {
+            "name": "Uzcard",
+            "desc": "50кк оборота",
+            "price": "30$"
         },
-        "10002": {
-            "name": "⚡ Товар 2",
-            "price": "990 руб.",
-            "desc": "Описание премиального товара."
+        "78696": {
+            "name": "Uzcard",
+            "desc": "100kk оборота",
+            "price": "55$"
+        },
+        "97474": {
+            "name": "Visa",
+            "desc": "50kk оборота",
+            "price": "60$"
+        },
+        "32757": {
+            "name": "Visa",
+            "desc": "100kk оборота",
+            "price": "100$"
         }
     },
     "card": "Не указана (настройте в админке)",
-    "welcome_text": "Добро пожаловать в наш магазин! Используйте кнопки ниже для навигации.",
-    "photo_id": null
+    "welcome_text": "У нас самые лучшие дропы узб и самые низкие цены",
+    "photo_id": "AgACAgIAAxkBAAIBu2ortLZI8MYV8WkLPs7F-nJ3CC5pAAKrGWsbIzRhSehSuiE2AAGt_gEAAwIAA3gAAzwE"
 }
