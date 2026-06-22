@@ -12,9 +12,9 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 # ================= НАСТРОЙКИ БОТА =================
-BOT_TOKEN = "8826949370:AAFPfMDKcxyOL0rkXnlMCUOox22btQWP3ZE"  
-ADMIN_ID = 5632144886          
-SUPPORT_USERNAME = "Wwww_068"  
+BOT_TOKEN = "8873268549:AAGMpcDD5XSelX29i1mvWEDjtvfdI2r2qME"  
+ADMIN_ID = 8246599178         
+SUPPORT USERNAME = "UZcardAdminshop"  
 # ===================================================
 
 # 🔥 Находим точный абсолютный путь к папке, где лежит этот файл bot.py
