@@ -4,12 +4,13 @@ on:
   push:
   schedule:
     - cron: '0 */3 * * *' # Запуск каждые 3 часа
+  workflow_dispatch: # Добавил возможность запускать вручную для проверки
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Обязательно: дает право на запись (push) в репозиторий
+      contents: write
 
     steps:
       - name: Checkout Code
@@ -26,19 +27,20 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Telegram Bot
-        # Бот будет работать, пока не сработает таймаут (через ~2.5 часа)
         timeout-minutes: 150 
+        env:
+          # ВАЖНО: Замените имена справа (secrets.XXX) на те, что у вас в настройках GitHub
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }} 
+          CHAT_ID: ${{ secrets.CHAT_ID }}
         run: python bot.py
 
       - name: Сохранение изменений в GitHub
-        if: always() # Выполнится даже если бот завершился с ошибкой или по таймауту
+        if: always()
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          # Добавляем файлы базы данных в индекс
           git add db_shop.json db_tickets.json
           
-          # Делаем коммит и пуш, если были изменения
           git commit -m "Авто-сохранение базы данных [skip ci]" || echo "Нет изменений для коммита"
           git push
